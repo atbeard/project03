@@ -1,13 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import TodoApp from './TodoApp'
 
-function App() {
-  return (
-    <div className="App">
-     
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <TodoApp />
+    )
+  }
 }
-
-export default App;
