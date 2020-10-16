@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react'
 import { uuid } from 'uuidv4'
-import TodoList from './TodoList'
+import './App.css'
 
 export default class TodoApp extends Component {
     constructor() {
@@ -17,7 +17,7 @@ export default class TodoApp extends Component {
         this.handleAdd = () => {
             console.log('handleAdd called')
             let newTodo = this.todoRef.current.value
-            this.setState({ todos: [...this.state.todos, { id: uuid(), newTodo: newTodo, complete: true }], text: "" })
+            this.setState({ todos: [...this.state.todos, { id: uuid(), newTodo: newTodo, complete: false }], text: "" })
         }
     }
 
@@ -36,18 +36,12 @@ export default class TodoApp extends Component {
         })
     }
 
-    handleComplete = (todos) => {
+    handleComplete = () => {
         this.setState({
             todos: this.state.todos.map(todo => {
-                if (todos.complete === true)
+                if (todo.complete === true)
                     return (
                         <div>
-                            {todos.filter(todos => 
-                                 <p>
-                                 {todos}
-                                 </p>
-                                )}
-                           
                         </div>
                     )
                 else return todo
@@ -72,16 +66,16 @@ export default class TodoApp extends Component {
                     this.state.todos.map((todo) => {
                         return (
                             <div key={todo.id}>
-                                <p>
+                                <p style={{textDecoration: todo.complete ? 'line-through' : ''}}>
                                 <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
                                 {todo.newTodo}
-                                </p>
+                                </p>    
                             </div>
                         )
                     })
                 }
-                <button type="button" onClick={this.handleComplete}>Active</button>
-                <button type="button">Completed</button>
+                <button type="button" onClick={this.handleComplete}>Complete</button>
+                <button type="button">Not Complete</button>
             </div>
 
         )
