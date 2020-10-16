@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 
 export default class Contact extends Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
             fname: [],
@@ -10,7 +10,7 @@ export default class Contact extends Component {
             email: [],
             comments: [],
         }
-    this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
 
     }
 
@@ -18,51 +18,52 @@ export default class Contact extends Component {
     handleChange(event) {
         event.preventDefault();
         const target = event.target
-        const value= target.value
+        const value = target.value
         const name = target.name
         this.setState({
             [name]: value
         })
     }
 
-    handleSubmit(fname, lname, email, comment){
-        console.log({fname, lname, email, comment})
+    hanldeSubmit(event) {
+        event.preventDefault();
+        console.log('handle request')
     }
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-            <input 
-            type="text" 
-            name="fname" 
-            placeholder="First Name" 
-            onChange={this.handleChange}
-            />
-            <br/>
-            <br/>
-            <input 
-            type="text" 
-            name="lname" 
-            placeholder="Last Name" 
-            onChange={this.handleChange}
-            />            
-            <br/>
-            <br/>
-            <input 
-            type="text" 
-            name="fname" 
-            placeholder="Email Address" 
-            onChange={this.handleChange}
-            />
-            <br/>
-            <br/>
-            <textarea 
-            type="text" 
-            name="comments" 
-            placeholder="Additional Comments" 
-            onChange={this.handleChange}
-            />
-            <br />
-            <button type="submit">Submit</button>       
+                <input
+                    type="text"
+                    name="fname"
+                    placeholder="First Name"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <br />
+                <input
+                    type="text"
+                    name="lname"
+                    placeholder="Last Name"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <br />
+                <input
+                    type="text"
+                    name="email"
+                    placeholder="Email Address"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <br />
+                <textarea
+                    type="text"
+                    name="comments"
+                    placeholder="Additional Comments"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <button type="submit">Submit</button>
             </form>
         )
     }

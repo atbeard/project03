@@ -8,6 +8,7 @@ export default class TodoApp extends Component {
         this.state = {
             text: "",
             todos: [],
+            filtered: [],
         }
 
         this.handleChange = event => {
@@ -41,8 +42,7 @@ export default class TodoApp extends Component {
             todos: this.state.todos.map(todo => {
                 if (todo.complete === true)
                     return (
-                        <div>
-                        </div>
+                        <div></div>
                     )
                 else return todo
             }
@@ -66,10 +66,10 @@ export default class TodoApp extends Component {
                     this.state.todos.map((todo) => {
                         return (
                             <div key={todo.id}>
-                                <p style={{textDecoration: todo.complete ? 'line-through' : ''}}>
-                                <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
-                                {todo.newTodo}
-                                </p>    
+                                <p style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
+                                    <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
+                                    {todo.newTodo}
+                                </p>
                             </div>
                         )
                     })
