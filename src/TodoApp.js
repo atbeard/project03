@@ -1,55 +1,89 @@
 import React, { Component, createRef } from 'react'
 import { uuid } from 'uuidv4'
+import TodoList from './TodoList'
 
 export default class TodoApp extends Component {
     constructor() {
         super()
         this.state = {
+            text: "",
             todos: [],
-            checked: false
         }
 
-        const checked = [...this.state.checked]
-    
+        this.handleChange = event => {
+            this.setState({ text: event.target.value })
+        }
         this.todoRef = createRef()
         this.handleAdd = () => {
             console.log('handleAdd called')
             let newTodo = this.todoRef.current.value
-            this.setState({ todos: [...this.state.todos, { id: uuid(), newTodo: newTodo }] })
+            this.setState({ todos: [...this.state.todos, { id: uuid(), newTodo: newTodo, complete: true }], text: "" })
         }
     }
-        handleCheck () {
-            this.setState({checked : !this.state.checked})
-        }
-        componentDidUpdate() {
-            this.state.todos.forEach( (todo) => {
-                console.log(JSON.stringify(todo))
+
+    handleClick = (id) => {
+        this.setState({
+            todos: this.state.todos.map(todo => {
+                if (todo.id === id) {
+                    return ({
+                        ...todo,
+                        complete: !todo.complete
+                    })
+                } else {
+                    return todo;
+                }
             })
-        }
+        })
+    }
+
+    handleComplete = (todos) => {
+        this.setState({
+            todos: this.state.todos.map(todo => {
+                if (todos.complete === true)
+                    return (
+                        <div>
+                            {todos.filter(todos => 
+                                 <p>
+                                 {todos}
+                                 </p>
+                                )}
+                           
+                        </div>
+                    )
+                else return todo
+            }
+            )
+        })
+    }
+
+    componentDidUpdate() {
+        this.state.todos.forEach((todo) => {
+            console.log(JSON.stringify(todo))
+        })
+    }
     render() {
         return (
             <div>
                 <form>
-                <input type="text" ref={this.todoRef} placeholder="enter todo" />
-                <button type="button" onClick={this.handleAdd}>Add Todo</button>
+                    <input type="text" ref={this.todoRef} value={this.state.text} onChange={this.handleChange} placeholder="enter todo" />
+                    <button type="button" onClick={this.handleAdd}>Add Todo</button>
                 </form>
                 {
-                    this.state.todos.map((todo, id) => {
+                    this.state.todos.map((todo) => {
                         return (
                             <div key={todo.id}>
-                            {todo.newTodo}
-                            {this.state.checked ? ' True' : ' False'}
-                            <input type="checkbox" onClick={this.handleCheck.bind(this, id)} />
+                                <p>
+                                <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
+                                {todo.newTodo}
+                                </p>
                             </div>
                         )
                     })
                 }
-                <button type="button">Active</button>
+                <button type="button" onClick={this.handleComplete}>Active</button>
                 <button type="button">Completed</button>
             </div>
 
         )
     }
 }
-
-
