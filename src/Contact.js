@@ -11,30 +11,27 @@ export default class Contact extends Component {
             comments: [],
         }
         this.handleChange = this.handleChange.bind(this)
-
     }
 
 
     handleChange(event) {
-        event.preventDefault();
-        const target = event.target
-        const value = target.value
-        const name = target.name
+        const value = event.target.value;
         this.setState({
-            [name]: value
+            ...this.state,
+            [event.target.name]: value
         })
     }
 
-    hanldeSubmit(event) {
-        event.preventDefault();
-        console.log('handle request')
+    handleSubmit = () => {
+      alert('thank you for submitting ' + this.state.fname + "!")
     }
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form>
                 <input
                     type="text"
                     name="fname"
+                    value={this.state.fname}
                     placeholder="First Name"
                     onChange={this.handleChange}
                 />
@@ -43,6 +40,7 @@ export default class Contact extends Component {
                 <input
                     type="text"
                     name="lname"
+                    value={this.state.lname}
                     placeholder="Last Name"
                     onChange={this.handleChange}
                 />
@@ -51,6 +49,7 @@ export default class Contact extends Component {
                 <input
                     type="text"
                     name="email"
+                    value={this.state.email}
                     placeholder="Email Address"
                     onChange={this.handleChange}
                 />
@@ -59,11 +58,12 @@ export default class Contact extends Component {
                 <textarea
                     type="text"
                     name="comments"
+                    value={this.state.comments}
                     placeholder="Additional Comments"
                     onChange={this.handleChange}
                 />
                 <br />
-                <button type="submit">Submit</button>
+                <button type="button" onClick={this.handleSubmit}>Submit</button>
             </form>
         )
     }

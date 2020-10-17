@@ -6,8 +6,9 @@ import Home from './Home'
 import Contact from './Contact'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
+
 export default class App extends Component {
-  render() {
+  render() {   
     return (
       <BrowserRouter>
       <div className="App">

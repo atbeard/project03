@@ -21,3 +21,7 @@ nav {
 Link {
   text-decoration: none;
 }
+
+.nav-header {
+  font-size: 30px;
+}

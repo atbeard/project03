@@ -1,6 +1,8 @@
 import React, { Component, createRef } from 'react'
 import { uuid } from 'uuidv4'
 import './App.css'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { addTodo, deleteTodo } from './actions'
 
 export default class TodoApp extends Component {
     constructor() {
@@ -8,7 +10,7 @@ export default class TodoApp extends Component {
         this.state = {
             text: "",
             todos: [],
-            filtered: [],
+            filtered: 'all'
         }
 
         this.handleChange = event => {
@@ -37,16 +39,9 @@ export default class TodoApp extends Component {
         })
     }
 
-    handleComplete = () => {
+    handleComplete = (a) => {
         this.setState({
-            todos: this.state.todos.map(todo => {
-                if (todo.complete === true)
-                    return (
-                        <div></div>
-                    )
-                else return todo
-            }
-            )
+            filtered: a
         })
     }
 
@@ -56,6 +51,16 @@ export default class TodoApp extends Component {
         })
     }
     render() {
+        let todos = [];
+
+        if (this.state.filtered === 'all'){
+            todos = this.state.todos;
+        }else if (this.state.filtered === 'active'){
+            todos = this.state.todos.filter(todo => !todo.complete)
+        }else if (this.state.filtered === 'complete'){
+            todos = this.state.todos.filter(todo => todo.complete)
+        }
+
         return (
             <div>
                 <form>
@@ -63,20 +68,21 @@ export default class TodoApp extends Component {
                     <button type="button" onClick={this.handleAdd}>Add Todo</button>
                 </form>
                 {
-                    this.state.todos.map((todo) => {
-                        return (
-                            <div key={todo.id}>
-                                <p style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
-                                    <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
-                                    {todo.newTodo}
-                                </p>
-                            </div>
-                        )
-                    })
-                }
-                <button type="button" onClick={this.handleComplete}>Complete</button>
-                <button type="button">Not Complete</button>
-            </div>
+                todos.map((todo) => {
+                return (
+                    <div key={todo.id}>
+                        <p style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
+                            <input type="checkbox" onClick={() => this.handleClick(todo.id)} />
+                            {todo.newTodo}
+                        </p>
+                    </div>
+                )
+            })
+        }
+                <button type="button" onClick={()=> this.handleComplete('all')}>All</button>
+                <button type="button" onClick={()=> this.handleComplete('active')}>Not Complete</button>
+                <button type="button" onClick={()=> this.handleComplete('complete')}>Complete</button>
+            </div >
 
         )
     }

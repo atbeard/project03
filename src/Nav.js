@@ -6,7 +6,7 @@ export default class Nav extends Component {
     render() {
         return (
             <nav>
-                <h3>My Todo App</h3>
+                <h3 className="nav-header">My Todo App</h3>
                 <ul className="nav-links">
                     <Link style={{textDecoration: 'none'}}
                     to="/"><li>Home</li></Link>
